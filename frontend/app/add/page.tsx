@@ -2,14 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase";
 import { createProperty } from "@/lib/api";
 import { PropertyFormData, PropertyStatus } from "@/types";
 
 export default function AddPropertyPage() {
   const router = useRouter();
-  const supabase = createClient();
-
   const [form, setForm] = useState<PropertyFormData>({
     address: "",
     suburb: "",
@@ -38,19 +35,10 @@ export default function AddPropertyPage() {
     setLoading(true);
     setError(null);
 
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-
-    if (!session) {
-      router.push("/login");
-      return;
-    }
-
     try {
-      const property = await createProperty(form, session.access_token);
+      const property = await createProperty(form);
       router.push(`/property/${property.id}`);
-    } catch (err) {
+    } catch {
       setError("Failed to add property. Please try again.");
       setLoading(false);
     }

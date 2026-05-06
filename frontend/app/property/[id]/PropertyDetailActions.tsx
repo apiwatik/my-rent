@@ -9,14 +9,12 @@ interface Props {
   propertyId: string;
   currentStatus: PropertyStatus;
   isWishlist: boolean;
-  accessToken: string;
 }
 
 export default function PropertyDetailActions({
   propertyId,
   currentStatus,
   isWishlist,
-  accessToken,
 }: Props) {
   const router = useRouter();
   const [status, setStatus] = useState(currentStatus);
@@ -32,7 +30,7 @@ export default function PropertyDetailActions({
   async function changeStatus(newStatus: PropertyStatus) {
     setLoading(true);
     try {
-      await updateProperty(propertyId, { status: newStatus }, accessToken);
+      await updateProperty(propertyId, { status: newStatus });
       setStatus(newStatus);
     } finally {
       setLoading(false);
@@ -42,11 +40,7 @@ export default function PropertyDetailActions({
   async function toggleWishlist() {
     setLoading(true);
     try {
-      await updateProperty(
-        propertyId,
-        { is_wishlist: !wishlist },
-        accessToken
-      );
+      await updateProperty(propertyId, { is_wishlist: !wishlist });
       setWishlist(!wishlist);
     } finally {
       setLoading(false);
@@ -57,7 +51,7 @@ export default function PropertyDetailActions({
     if (!confirm("Delete this property? This cannot be undone.")) return;
     setLoading(true);
     try {
-      await deleteProperty(propertyId, accessToken);
+      await deleteProperty(propertyId);
       router.push("/");
       router.refresh();
     } catch {

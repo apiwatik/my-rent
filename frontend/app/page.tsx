@@ -1,48 +1,24 @@
 import { Suspense } from "react";
+import Link from "next/link";
 import FilterBar from "@/components/FilterBar";
 import PropertyCard from "@/components/PropertyCard";
-import { createServerSupabaseClient } from "@/lib/supabase-server";
-import { getProperties } from "@/lib/api";
+import { getProperties } from "@/lib/properties";
 import { Property, PropertyFilters } from "@/types";
-import Link from "next/link";
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
 async function PropertyGrid({ filters }: { filters: PropertyFilters }) {
-  const supabase = await createServerSupabaseClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) {
-    return (
-      <div className="text-center py-[80px]">
-        <span className="material-symbols-outlined text-[48px] text-on-surface-variant mb-[24px] block">
-          lock
-        </span>
-        <p className="text-[16px] text-on-surface-variant mb-[24px]">
-          Sign in to view your properties
-        </p>
-        <Link
-          href="/login"
-          className="inline-block bg-black text-white px-[48px] py-3 text-[12px] font-semibold tracking-widest uppercase hover:opacity-90 transition-opacity"
-        >
-          Sign In
-        </Link>
-      </div>
-    );
-  }
-
   let properties: Property[] = [];
+
   try {
-    properties = await getProperties(session.access_token, filters);
+    properties = await getProperties(filters);
   } catch {
     return (
       <div className="text-center py-[80px]">
         <p className="text-[16px] text-on-surface-variant">
-          Failed to load properties. Make sure the API is running.
+          Failed to load properties. Check the Supabase environment settings.
         </p>
       </div>
     );

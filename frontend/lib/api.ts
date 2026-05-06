@@ -1,24 +1,19 @@
 import { Property, PropertyFormData, PropertyFilters } from "@/types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-
-async function fetchWithAuth(
+async function fetchApi(
   path: string,
-  accessToken: string,
   options: RequestInit = {}
 ): Promise<Response> {
-  return fetch(`${API_BASE}${path}`, {
+  return fetch(path, {
     ...options,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
       ...options.headers,
     },
   });
 }
 
 export async function getProperties(
-  accessToken: string,
   filters: PropertyFilters = {}
 ): Promise<Property[]> {
   const params = new URLSearchParams();
@@ -28,25 +23,19 @@ export async function getProperties(
   if (filters.status) params.set("status", filters.status);
 
   const query = params.toString() ? `?${params}` : "";
-  const res = await fetchWithAuth(`/properties${query}`, accessToken);
+  const res = await fetchApi(`/api/properties${query}`);
   if (!res.ok) throw new Error("Failed to fetch properties");
   return res.json();
 }
 
-export async function getProperty(
-  id: string,
-  accessToken: string
-): Promise<Property> {
-  const res = await fetchWithAuth(`/properties/${id}`, accessToken);
+export async function getProperty(id: string): Promise<Property> {
+  const res = await fetchApi(`/api/properties/${id}`);
   if (!res.ok) throw new Error("Property not found");
   return res.json();
 }
 
-export async function createProperty(
-  data: PropertyFormData,
-  accessToken: string
-): Promise<Property> {
-  const res = await fetchWithAuth("/properties", accessToken, {
+export async function createProperty(data: PropertyFormData): Promise<Property> {
+  const res = await fetchApi("/api/properties", {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -56,10 +45,9 @@ export async function createProperty(
 
 export async function updateProperty(
   id: string,
-  data: Partial<PropertyFormData>,
-  accessToken: string
+  data: Partial<PropertyFormData>
 ): Promise<Property> {
-  const res = await fetchWithAuth(`/properties/${id}`, accessToken, {
+  const res = await fetchApi(`/api/properties/${id}`, {
     method: "PUT",
     body: JSON.stringify(data),
   });
@@ -67,11 +55,8 @@ export async function updateProperty(
   return res.json();
 }
 
-export async function deleteProperty(
-  id: string,
-  accessToken: string
-): Promise<void> {
-  const res = await fetchWithAuth(`/properties/${id}`, accessToken, {
+export async function deleteProperty(id: string): Promise<void> {
+  const res = await fetchApi(`/api/properties/${id}`, {
     method: "DELETE",
   });
   if (!res.ok) throw new Error("Failed to delete property");

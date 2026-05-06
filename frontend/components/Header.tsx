@@ -1,23 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase";
+import { usePathname } from "next/navigation";
 
-interface HeaderProps {
-  userEmail?: string | null;
-}
-
-export default function Header({ userEmail }: HeaderProps) {
+export default function Header() {
   const pathname = usePathname();
-  const router = useRouter();
-  const supabase = createClient();
-
-  async function handleSignOut() {
-    await supabase.auth.signOut();
-    router.push("/login");
-    router.refresh();
-  }
 
   const navLinkClass = (href: string) => {
     const active = pathname === href || (href !== "/" && pathname.startsWith(href));
@@ -50,28 +37,9 @@ export default function Header({ userEmail }: HeaderProps) {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-[16px]">
-          {userEmail ? (
-            <div className="flex items-center gap-[16px]">
-              <span className="hidden md:block text-[12px] text-on-surface-variant">
-                {userEmail}
-              </span>
-              <button
-                onClick={handleSignOut}
-                className="material-symbols-outlined cursor-pointer text-on-surface-variant hover:text-black transition-colors"
-                title="Sign out"
-              >
-                logout
-              </button>
-            </div>
-          ) : (
-            <Link href="/login">
-              <span className="material-symbols-outlined cursor-pointer text-on-surface-variant hover:text-black transition-colors">
-                account_circle
-              </span>
-            </Link>
-          )}
-        </div>
+        <span className="text-[12px] font-semibold tracking-widest uppercase text-on-surface-variant">
+          Rentals
+        </span>
       </div>
     </header>
   );

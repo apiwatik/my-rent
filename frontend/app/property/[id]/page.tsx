@@ -1,11 +1,10 @@
-import { createServerSupabaseClient } from "@/lib/supabase-server";
-import { getProperty } from "@/lib/api";
-import { Property } from "@/types";
-import StatusBadge from "@/components/StatusBadge";
-import PropertyDetailActions from "./PropertyDetailActions";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import StatusBadge from "@/components/StatusBadge";
+import { getProperty } from "@/lib/properties";
+import { Property } from "@/types";
+import PropertyDetailActions from "./PropertyDetailActions";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -13,30 +12,11 @@ interface PageProps {
 
 export default async function PropertyDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const supabase = await createServerSupabaseClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) {
-    return (
-      <div className="text-center py-[80px]">
-        <p className="text-[16px] text-on-surface-variant mb-[24px]">
-          Sign in to view this property
-        </p>
-        <Link
-          href="/login"
-          className="inline-block bg-black text-white px-[48px] py-3 text-[12px] font-semibold tracking-widest uppercase hover:opacity-90 transition-opacity"
-        >
-          Sign In
-        </Link>
-      </div>
-    );
-  }
 
   let property: Property;
+
   try {
-    property = await getProperty(id, session.access_token);
+    property = await getProperty(id);
   } catch {
     notFound();
   }
@@ -56,7 +36,6 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[48px]">
-        {/* Image */}
         <div className="aspect-[4/3] relative overflow-hidden bg-surface-container-high">
           {property.image_url ? (
             <Image
@@ -79,7 +58,6 @@ export default async function PropertyDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Details */}
         <div>
           <p className="text-[12px] font-semibold tracking-widest uppercase leading-none text-on-surface-variant mb-[8px]">
             {property.suburb}
@@ -91,7 +69,6 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             ${property.price_per_week}/wk
           </p>
 
-          {/* Amenities */}
           <div className="flex flex-wrap gap-[8px] mb-[48px]">
             <div className="flex items-center gap-1 px-[16px] py-[8px] bg-surface-container-low text-on-surface-variant text-[11px] font-medium">
               <span className="material-symbols-outlined text-[14px]">bed</span>
@@ -123,7 +100,6 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             )}
           </div>
 
-          {/* Notes */}
           {property.notes && (
             <div className="border-t border-[0.5px] border-[#e5e5e5] pt-[24px] mb-[24px]">
               <p className="text-[12px] font-semibold tracking-widest uppercase leading-none text-on-surface-variant mb-[8px]">
@@ -135,7 +111,6 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             </div>
           )}
 
-          {/* Listing URL */}
           {property.listing_url && (
             <div className="mb-[24px]">
               <a
@@ -156,7 +131,6 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             propertyId={property.id}
             currentStatus={property.status}
             isWishlist={property.is_wishlist}
-            accessToken={session.access_token}
           />
         </div>
       </div>
