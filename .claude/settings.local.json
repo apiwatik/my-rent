@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/Coding/**)",
+      "Bash(unzip -l stitch_my_rent_property_wishlist.zip)",
+      "Bash(unzip -o stitch_my_rent_property_wishlist.zip -d my-rent-source/)",
+      "Bash(npx create-next-app@latest frontend --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)"
+    ]
+  }
+}
