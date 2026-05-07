@@ -57,14 +57,7 @@
   --color-outline: #7e7576;
   --color-outline-variant: #cfc4c5;
 
-  /* Border radius — all sharp */
-  --radius-none: 0px;
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-full: 9999px;
-  --radius: 0px;
+  /* Border radius (removed sharp overrides to allow tailwind classes) */
 
   /* Spacing */
   --spacing-base: 4px;

@@ -28,48 +28,51 @@ export default function FilterBar() {
   }
 
   const labelClass =
-    "block text-[12px] font-semibold tracking-widest uppercase leading-none text-on-surface-variant mb-[8px]";
+    "block text-[12px] font-medium text-[#5f6368] mb-1 ml-1";
   const inputClass =
-    "w-full bg-transparent border-b border-[0.5px] border-black py-[8px] focus:ring-0 focus:outline-none placeholder:text-outline text-[16px] leading-[1.6]";
+    "w-full bg-[#f1f3f4] border-none rounded-[8px] px-4 py-2.5 text-[#202124] focus:bg-white focus:ring-[2px] focus:ring-[#1a73e8] outline-none transition-colors placeholder:text-[#80868b] text-[14px]";
   const selectClass =
-    "w-full bg-transparent border-b border-[0.5px] border-black py-[8px] focus:ring-0 focus:outline-none appearance-none text-[16px] leading-[1.6] cursor-pointer";
+    "w-full bg-[#f1f3f4] border-none rounded-[8px] px-4 py-2.5 text-[#202124] focus:bg-white focus:ring-[2px] focus:ring-[#1a73e8] outline-none transition-colors appearance-none cursor-pointer text-[14px]";
 
   return (
-    <section className="mb-[80px]">
-      <div className="bg-white border border-[0.5px] border-[#cfc4c5] p-[24px] flex flex-col md:flex-row gap-[16px] items-end">
-        <div className="flex-1 w-full">
-          <label className={labelClass}>Search Location</label>
+    <section className="mb-8">
+      <div className="bg-white rounded-[12px] border border-[#e0e0e0] p-5 flex flex-col lg:flex-row gap-4 items-end">
+        <div className="flex-1 w-full relative">
+          <label className={labelClass}>Location</label>
           <div className="relative">
+            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#5f6368] pointer-events-none text-[20px]">
+              search
+            </span>
             <input
-              className={inputClass}
+              className={`${inputClass} pl-10`}
               placeholder="Suburb or address"
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && applyFilters()}
             />
-            <span className="material-symbols-outlined absolute right-0 bottom-[8px] text-on-surface-variant">
-              search
-            </span>
           </div>
         </div>
 
-        <div className="w-full md:w-48">
+        <div className="w-full lg:w-40 relative">
           <label className={labelClass}>Bedrooms</label>
           <select
             className={selectClass}
             value={bedrooms}
             onChange={(e) => setBedrooms(e.target.value)}
           >
-            <option value="">Any bedrooms</option>
+            <option value="">Any beds</option>
             <option value="1">1 bed</option>
             <option value="2">2 beds</option>
             <option value="3">3+ beds</option>
           </select>
+          <span className="material-symbols-outlined absolute right-3 top-[34px] text-[#5f6368] pointer-events-none text-[20px]">
+            expand_more
+          </span>
         </div>
 
-        <div className="w-full md:w-48">
-          <label className={labelClass}>Max Rent/Week</label>
+        <div className="w-full lg:w-40 relative">
+          <label className={labelClass}>Max Rent</label>
           <select
             className={selectClass}
             value={maxPrice}
@@ -80,9 +83,12 @@ export default function FilterBar() {
             <option value="700">$700</option>
             <option value="1000">$1000</option>
           </select>
+          <span className="material-symbols-outlined absolute right-3 top-[34px] text-[#5f6368] pointer-events-none text-[20px]">
+            expand_more
+          </span>
         </div>
 
-        <div className="w-full md:w-48">
+        <div className="w-full lg:w-40 relative">
           <label className={labelClass}>Status</label>
           <select
             className={selectClass}
@@ -94,14 +100,22 @@ export default function FilterBar() {
             <option value="visited">Visited</option>
             <option value="rejected">Rejected</option>
           </select>
+          <span className="material-symbols-outlined absolute right-3 top-[34px] text-[#5f6368] pointer-events-none text-[20px]">
+            expand_more
+          </span>
         </div>
 
         <button
           onClick={applyFilters}
           disabled={isPending}
-          className="w-full md:w-auto bg-black text-white px-[48px] py-3 text-[12px] font-semibold tracking-widest uppercase leading-none hover:opacity-90 transition-opacity disabled:opacity-50"
+          className="w-full lg:w-auto bg-[#1a73e8] text-white px-6 py-2.5 rounded-[8px] text-[14px] font-medium hover:bg-[#1557b0] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
         >
-          Apply Filters
+          {isPending ? (
+            <span className="material-symbols-outlined animate-spin text-[18px]">refresh</span>
+          ) : (
+            <span className="material-symbols-outlined text-[18px]">filter_list</span>
+          )}
+          <span>Filter</span>
         </button>
       </div>
     </section>

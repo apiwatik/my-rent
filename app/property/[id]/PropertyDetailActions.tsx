@@ -60,22 +60,22 @@ export default function PropertyDetailActions({
   }
 
   return (
-    <div className="space-y-[24px]">
+    <div className="space-y-6">
       {/* Status switcher */}
       <div>
-        <p className="text-[12px] font-semibold tracking-widest uppercase leading-none text-on-surface-variant mb-[16px]">
+        <p className="text-[14px] font-medium text-[#202124] mb-3 flex items-center gap-2">
           Update Status
         </p>
-        <div className="flex gap-[8px]">
+        <div className="flex flex-wrap gap-2">
           {statusOptions.map((opt) => (
             <button
               key={opt.value}
               disabled={loading}
               onClick={() => changeStatus(opt.value)}
-              className={`px-[16px] py-[8px] text-[12px] font-semibold tracking-widest uppercase transition-colors disabled:opacity-50 ${
+              className={`px-4 py-2 rounded-full text-[14px] font-medium transition-colors disabled:opacity-50 ${
                 status === opt.value
-                  ? "bg-black text-white"
-                  : "border border-[0.5px] border-black text-black hover:bg-surface-container-low"
+                  ? "bg-[#e8f0fe] text-[#1a73e8] border border-[#e8f0fe]"
+                  : "bg-white border border-[#e0e0e0] text-[#5f6368] hover:bg-[#f8f9fa]"
               }`}
             >
               {opt.label}
@@ -85,13 +85,17 @@ export default function PropertyDetailActions({
       </div>
 
       {/* Actions */}
-      <div className="flex flex-wrap gap-[8px] pt-[24px] border-t border-[0.5px] border-[#e5e5e5]">
+      <div className="flex flex-wrap gap-3">
         <button
           disabled={loading}
           onClick={toggleWishlist}
-          className="flex items-center gap-[8px] px-[16px] py-[8px] border border-[0.5px] border-black text-[12px] font-semibold tracking-widest uppercase hover:bg-surface-container-low transition-colors disabled:opacity-50"
+          className={`flex-1 sm:flex-none flex justify-center items-center gap-2 px-5 py-2.5 rounded-[8px] text-[14px] font-medium transition-colors disabled:opacity-50 ${
+            wishlist
+              ? "bg-[#fce8e6] text-[#d93025] hover:bg-[#fad2cf] border-none"
+              : "bg-white border border-[#e0e0e0] text-[#5f6368] hover:bg-[#f8f9fa]"
+          }`}
         >
-          <span className="material-symbols-outlined text-[16px]">
+          <span className={`material-symbols-outlined text-[20px] ${wishlist ? "fill-current" : ""}`}>
             {wishlist ? "favorite" : "favorite_border"}
           </span>
           {wishlist ? "Remove from Wishlist" : "Add to Wishlist"}
@@ -100,9 +104,9 @@ export default function PropertyDetailActions({
         <button
           disabled={loading}
           onClick={handleDelete}
-          className="flex items-center gap-[8px] px-[16px] py-[8px] border border-[0.5px] border-error text-error text-[12px] font-semibold tracking-widest uppercase hover:bg-error-container transition-colors disabled:opacity-50"
+          className="flex-1 sm:flex-none flex justify-center items-center gap-2 px-5 py-2.5 bg-white border border-[#e0e0e0] rounded-[8px] text-[#d93025] text-[14px] font-medium hover:bg-[#fce8e6] hover:border-[#fce8e6] transition-colors disabled:opacity-50"
         >
-          <span className="material-symbols-outlined text-[16px]">delete</span>
+          <span className="material-symbols-outlined text-[20px]">delete</span>
           Delete
         </button>
       </div>

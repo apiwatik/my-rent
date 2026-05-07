@@ -10,15 +10,15 @@ const statusConfig: Record<
 > = {
   active: {
     label: "Active",
-    className: "bg-secondary-container text-on-secondary-container",
+    className: "bg-[#e6f4ea] text-[#137333]",
   },
   visited: {
     label: "Visited",
-    className: "bg-tertiary-fixed text-on-tertiary-fixed-variant",
+    className: "bg-[#fef7e0] text-[#ea8600]",
   },
   rejected: {
     label: "Rejected",
-    className: "bg-error-container text-on-error-container",
+    className: "bg-[#fce8e6] text-[#c5221f]",
   },
 };
 
@@ -26,7 +26,7 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
   const { label, className } = statusConfig[status];
   return (
     <span
-      className={`px-[16px] py-[4px] text-[12px] font-semibold tracking-widest uppercase leading-none ${className}`}
+      className={`px-3 py-1 text-[12px] font-medium rounded-full ${className}`}
     >
       {label}
     </span>
