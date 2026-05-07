@@ -56,53 +56,59 @@ export default function FilterBar() {
 
         <div className="w-full lg:w-40 relative">
           <label className={labelClass}>Bedrooms</label>
-          <select
-            className={selectClass}
-            value={bedrooms}
-            onChange={(e) => setBedrooms(e.target.value)}
-          >
-            <option value="">Any beds</option>
-            <option value="1">1 bed</option>
-            <option value="2">2 beds</option>
-            <option value="3">3+ beds</option>
-          </select>
-          <span className="material-symbols-outlined absolute right-3 top-[34px] text-[#5f6368] pointer-events-none text-[20px]">
-            expand_more
-          </span>
+          <div className="relative">
+            <select
+              className={selectClass}
+              value={bedrooms}
+              onChange={(e) => setBedrooms(e.target.value)}
+            >
+              <option value="">Any beds</option>
+              <option value="1">1 bed</option>
+              <option value="2">2 beds</option>
+              <option value="3">3+ beds</option>
+            </select>
+            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#5f6368] pointer-events-none text-[20px]">
+              expand_more
+            </span>
+          </div>
         </div>
 
         <div className="w-full lg:w-40 relative">
           <label className={labelClass}>Max Rent</label>
-          <select
-            className={selectClass}
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
-          >
-            <option value="">No limit</option>
-            <option value="500">$500</option>
-            <option value="700">$700</option>
-            <option value="1000">$1000</option>
-          </select>
-          <span className="material-symbols-outlined absolute right-3 top-[34px] text-[#5f6368] pointer-events-none text-[20px]">
-            expand_more
-          </span>
+          <div className="relative">
+            <select
+              className={selectClass}
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+            >
+              <option value="">No limit</option>
+              <option value="500">$500</option>
+              <option value="700">$700</option>
+              <option value="1000">$1000</option>
+            </select>
+            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#5f6368] pointer-events-none text-[20px]">
+              expand_more
+            </span>
+          </div>
         </div>
 
         <div className="w-full lg:w-40 relative">
           <label className={labelClass}>Status</label>
-          <select
-            className={selectClass}
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value="">All status</option>
-            <option value="active">Active</option>
-            <option value="visited">Visited</option>
-            <option value="rejected">Rejected</option>
-          </select>
-          <span className="material-symbols-outlined absolute right-3 top-[34px] text-[#5f6368] pointer-events-none text-[20px]">
-            expand_more
-          </span>
+          <div className="relative">
+            <select
+              className={selectClass}
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="">All status</option>
+              <option value="active">Active</option>
+              <option value="visited">Visited</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#5f6368] pointer-events-none text-[20px]">
+              expand_more
+            </span>
+          </div>
         </div>
 
         <button
